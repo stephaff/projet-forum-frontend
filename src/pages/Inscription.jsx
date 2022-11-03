@@ -4,19 +4,28 @@ import { Button, Container, Grid, Box, Typography, Link } from '@mui/material';
 import { TextField } from '@mui/material';
 
 
-const Connexion = () => {
+const Inscription = () => {
 
-
+    const [nom, setNom] = useState('');
+    const [nomError, setNomError] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [confirmPasswordError, setConfirmPasswordError] = useState(false);
 
-    const connexion = (e) => {
+    const inscription = (e) => {
         e.preventDefault()
 
+        setNomError(false)
         setEmailError(false)
         setPasswordError(false)
+        setConfirmPasswordError(false)
+
+        if(nom === ''){
+            setNomError(true)
+        }
 
         if(email === ''){
             setEmailError(true)
@@ -26,10 +35,14 @@ const Connexion = () => {
             setPasswordError(true)
         }
 
-        if(email && password){
+        if(confirmPassword === ''){
+            setConfirmPasswordError(true)
+        }
+
+        if(nom && email && password && confirmPassword){
             console.log(password)
         }
-        
+
     }
 
     return (
@@ -71,9 +84,20 @@ const Connexion = () => {
                             component="h1"
                             gutterBottom
                         >
-                            Se connecter
+                            Créer un compte
                         </Typography>
-                        <form noValidate autoComplete='off' className='connexion-form' onSubmit={ connexion }>
+                        <form noValidate autoComplete='off' className='connexion-form' onSubmit={ inscription }>
+                            <TextField 
+                                onChange={ e => setNom(e.target.value) }
+                                label="Nom"
+                                variant="outlined"
+                                color='secondary'
+                                size="small"
+                                fullWidth
+                                required
+                                error={ nomError }
+                            />
+                            <br />
                             <TextField 
                                 onChange={ e => setEmail(e.target.value) }
                                 label="Email"
@@ -97,6 +121,18 @@ const Connexion = () => {
                                 error={ passwordError }
                             />
                             <br />
+                            <TextField 
+                                onChange={ e => setConfirmPassword(e.target.value) }
+                                label="Password(confirmation)"
+                                variant="outlined"
+                                color='secondary'
+                                size="small"
+                                type="password"
+                                fullWidth
+                                required
+                                error={ confirmPasswordError }
+                            />
+                            <br />
                             <Button 
                                 type='submit'
                                 variant='contained'
@@ -105,11 +141,11 @@ const Connexion = () => {
                                     marginBottom : "1rem"
                                 }}
                             >
-                                Connexion
+                                Inscription
                             </Button>
                         </form>
                         <Typography>
-                            Si vous n'avez pas de compte, vous pouvez vous <Link href="/inscription">inscrire</Link>
+                        Si vous avez déjà un compte, vous pouvez vous <Link href="/connexion">connecter</Link>
                         </Typography>
                     </Box>
                 </Grid>
@@ -118,4 +154,4 @@ const Connexion = () => {
     );
 }
 
-export default Connexion;
+export default Inscription;

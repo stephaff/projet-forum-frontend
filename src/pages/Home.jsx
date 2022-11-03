@@ -35,7 +35,7 @@ const Home = () => {
                 }}
             >
                 <Toolbar>
-                    <Link to="#"
+                    <Link to="/"
                         sx={{
                             textDecoration : "none",
                             cursor : "pointer"
@@ -65,7 +65,7 @@ const Home = () => {
                         Steph
                     </Typography>
                     <Button
-                        href="#"
+                        href="/connexion"
                         sx={{
                             marginLeft : "1rem",
                         }}
