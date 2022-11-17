@@ -2,7 +2,8 @@ import React from 'react';
 import { useState } from 'react';
 import { Button, Container, Grid, Box, Typography, Link } from '@mui/material';
 import { TextField } from '@mui/material';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from '../redux/action/actions';
 
 const Inscription = () => {
 
@@ -14,8 +15,14 @@ const Inscription = () => {
     const [passwordError, setPasswordError] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+    const [inscrire, setInscrire] = useState(false);
 
-    const inscription = (e) => {
+    const dispatch = useDispatch();
+    const user = useSelector(state => state.authReducer)
+
+    console.log(user)
+
+    const inscription = async(e) => {
         e.preventDefault()
 
         setNomError(false)
@@ -40,7 +47,21 @@ const Inscription = () => {
         }
 
         if(nom && email && password && confirmPassword){
-            console.log(password)
+            setInscrire(!inscrire)
+            console.log(email+' '+password)
+            fetch('/api/users/inscription', {
+                method : 'POST',
+                headers : {'Content-Type':'application/json'},
+                body : JSON.stringify({ email , password })
+            }
+            )
+            .then(response => 
+                response.json()
+            )
+            .then(json =>
+                // localStorage.setItem('user', JSON.stringify(json))
+                dispatch(setUser(json))
+            )
         }
 
     }
@@ -145,7 +166,7 @@ const Inscription = () => {
                             </Button>
                         </form>
                         <Typography>
-                        Si vous avez déjà un compte, vous pouvez vous <Link href="/connexion">connecter</Link>
+                            Si vous avez déjà un compte, vous pouvez vous <Link href="/connexion">connecter</Link>
                         </Typography>
                     </Box>
                 </Grid>

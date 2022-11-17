@@ -27,7 +27,7 @@ const Connexion = () => {
         }
 
         if(email && password){
-            console.log(password)
+            console.log(password+' '+email)
         }
         
     }

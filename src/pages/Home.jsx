@@ -1,7 +1,15 @@
-import { AppBar, Avatar, Box, Button, Container, Grid, Input, Link, List, ListItem, ListItemText, Paper, Toolbar, Typography } from '@mui/material';
-import React from 'react';
+import { AppBar, Avatar, Box, Button, Card, Container, Grid, Input, Link, List, ListItem, ListItemText, Toolbar, Typography } from '@mui/material';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 const Home = () => {
+
+    const questions = useSelector(state => state.questionReducer.questions)
+    
+    useEffect(() => {
+        
+    }, []);
 
     //pour le design
 
@@ -162,7 +170,52 @@ const Home = () => {
                     </List>
                 </Grid>
                 <Grid item lg={9}>
-                    <Paper>Soir</Paper>
+                    <Box
+                        sx={{
+                            display : "flex",
+                            alignItems : "center",
+                            justifyContent : "space-between",
+                            marginBottom : "1rem"
+                        }}
+                    >
+                        <Typography
+
+                        >
+                            7 questions
+                        </Typography>
+                        <Button
+                            variant="contained"
+                            endIcon={ <ArrowForwardIcon /> }
+                        >
+                            Poser une question
+                        </Button>
+                    </Box>
+                    <Box>
+                        {questions.map(question =>
+                            <Card 
+                                variant="outlined"
+                                key={ question.title }
+                                sx={{
+                                    padding : "2rem 1rem",
+                                    marginBottom : "1rem",
+                                    display :"flex",
+                                    flexDirection : "column",
+                                    rowGap : "7px"
+                                }}
+                            > 
+                                <Link href="#">{ question.title }</Link>
+                                <Typography>
+                                    31/10/2022
+                                </Typography>
+                                <Typography>
+                                    { question.contenu }
+                                </Typography>
+                                <Typography>
+                                    8 réponses
+                                </Typography>
+                            </Card>
+                        )}
+                    </Box>
                 </Grid>
             </Grid>
         </Container>
